@@ -9,23 +9,23 @@
    - Now we install django in the virtual environment:
      - `pip3 install django`
    - Lastly we create a Django Project, lets call our project *django_starter_project* using the command:
-     - `django-admin startproject django_starter_project`   
-    ![Screenshot]()   
+     - `django-admin startproject django_starter_project`         
+    ![Screenshot](https://github.com/LF-DevOps-Intern/3_5_appservers-amit-rikeshkarma/blob/main/Gunicorn/snapshots/creater%20django%20starter%20project%20in%20virtual%20env.png)   
     We have created a Django starter project in a virtual environment.   
 
 2. Deploy the 3 instance of application using Gunicorn in 8089 port.
    - Activate the virtual environment and install gunicorn:
      - `pip3 install gunicorn`
-   - Lets add our IP address to the ALLOWED_HOSTS variable in the path _django_starter_project/settings.py_
-    ![ALLOWED_HOSTS Snapshot]()
+   - Lets add our IP address to the ALLOWED_HOSTS variable in the path _django_starter_project/settings.py_      
+    ![ALLOWED_HOSTS Snapshot](https://github.com/LF-DevOps-Intern/3_5_appservers-amit-rikeshkarma/blob/main/Gunicorn/snapshots/add%20IP%20in%20ALLOWED_HOSTS.png)
    - Now we run migrations:
      - `python3 manage.py makemigrations`
      - `python3 manage.py migrate`
    - Then let's test the sample project by running the following command:
      - `sudo ufw allow 8089`
      - This opens port:8089 by allowing it over the firewall. Let's check our Django server to test the setup so far using the command:
-       - `python3 manage.py runserver 0.0.0.0:8089`
-    ![Migrations and Runserver Snapshot]()
+       - `python3 manage.py runserver 0.0.0.0:8089`            
+    ![Migrations and Runserver Snapshot](https://github.com/LF-DevOps-Intern/3_5_appservers-amit-rikeshkarma/blob/main/Gunicorn/snapshots/make%20migrations%20and%20run%20server%20at%208089.png)
    - **Now we configure gunicorn**
      - Firstly, let’s make a configuration file for gunicorn server using following commands:
        - `mkdir gunicorn_conf`
@@ -37,9 +37,9 @@
          - workers = 3
      - After we configure the configuration file we need to run the following command which will deploy 3 instance of application using Gunicorn in 8089 port:
        - `gunicorn -c gunicorn_config.py django_starter_project.wsgi`
-     - Now we can test the server in the browser by using `192.168.254.141:8089`
-    ![Gunicorn deployed snapshot]()
-    ![Gunicorn deployed snapshot on browser]()
+     - Now we can test the server in the browser by using `192.168.254.141:8089`         
+    ![Gunicorn deployed snapshot](https://github.com/LF-DevOps-Intern/3_5_appservers-amit-rikeshkarma/blob/main/Gunicorn/snapshots/3instance%20Gunicorn%20in%208089%20port.png)              
+    ![Gunicorn deployed snapshot on browser](https://github.com/LF-DevOps-Intern/3_5_appservers-amit-rikeshkarma/blob/main/Gunicorn/snapshots/project%20testing%20on%20port%208089%20.png)
 
 
 3. Dump access log in a file in non-default pattern.
@@ -47,5 +47,5 @@
    - We can use following command to dump the log files:
      - `gunicorn app_py:django_starter_project --error-logfile gunicorn.error.log --access-logfile gunicorn.log --capture-output`
    - And we can ls to check the files inside
-     - `We can see ‘gunicorn.error.log’ and ‘gunicorn.log’ files now.
-    ~[Log Files]()
+     - `We can see ‘gunicorn.error.log’ and ‘gunicorn.log’ files now.       
+    ![Log Files](https://github.com/LF-DevOps-Intern/3_5_appservers-amit-rikeshkarma/blob/main/Gunicorn/snapshots/log%20files.png)
